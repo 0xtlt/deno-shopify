@@ -120,9 +120,6 @@ class Shopify {
       this.make(`themes/${themeId}/assets.json?asset[key]=${path}`),
       {
         method: "DELETE",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
       },
     )).json()).asset as { message: string };
 
