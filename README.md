@@ -112,3 +112,55 @@ async deleteAsset(
   path: string,
 ): Promise<{ message: string }>
 ```
+
+## Pages
+
+[Shopify documentation](https://shopify.dev/docs/admin-api/rest/reference/online-store/page?api%5Bversion%5D=2020-10)
+
+### Get pages
+
+Returns an object array of [Page](/types/page.d.ts) with [Endpoints](/types/page.d.ts)
+
+```typscript
+getPages(params?: PageEndpoints): Promise<Page[]>
+```
+
+### Get page
+
+Returns the [Page](/types/page.d.ts) associated object with [Endpoints](/types/page.d.ts)
+
+```typscript
+async getPage(pageId: number): Promise<Page>
+```
+
+### Count pages
+
+Returns the number of pages with [Endpoints](/types/page.d.ts)
+
+```typscript
+async countPages(params?: PageEndpoints): Promise<number>
+```
+
+### Create page
+
+Create a new [Page](/types/page.d.ts)
+
+```typescript
+async createPage(params: PageCreate): Promise<Page>
+```
+
+### Update page
+
+Update a [Page](/types/page.d.ts)
+
+```typescript
+async updatePage(pageId: number, params: PageCreate): Promise<Page>
+```
+
+### Delete page
+
+Delete a [Page](/types/page.d.ts)
+
+```typescript
+async deletePage(pageId: number): Promise<void>
+```

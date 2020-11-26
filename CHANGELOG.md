@@ -1,3 +1,7 @@
+# 0.2.0
+
+- Pages support
+
 # 0.1.2
 
 - Clean Shopify delete function

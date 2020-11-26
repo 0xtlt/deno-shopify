@@ -1,4 +1,6 @@
-import type { Asset, ConfigShopify, Theme } from "./types.d.ts";
+import type { Asset, ConfigShopify, Page, Theme } from "./types.d.ts";
+import { PageCreate, PageEndpoints } from "./types/page.d.ts";
+import { jsonToURL } from "./utils.ts";
 
 class Shopify {
   private config: ConfigShopify;
@@ -124,6 +126,57 @@ class Shopify {
     )).json()).asset as { message: string };
 
     return response;
+  }
+
+  // Pages
+  async getPages(params?: PageEndpoints): Promise<Page[]> {
+    return (await (await fetch(
+      this.make("pages.json" + (params ? `?${jsonToURL(params)}` : "")),
+    ))
+      .json()).pages as Page[];
+  }
+
+  async countPages(params?: PageEndpoints): Promise<number> {
+    return (await (await fetch(
+      this.make("count.json" + (params ? `?${jsonToURL(params)}` : "")),
+    ))
+      .json()).count as number;
+  }
+
+  async getPage(pageId: number): Promise<Page> {
+    return (await (await fetch(
+      this.make(`pages/${pageId}.json`),
+    ))
+      .json()).page as Page;
+  }
+
+  async createPage(params: PageCreate): Promise<Page> {
+    return (await (await fetch(this.make("pages.json"), {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify({ page: params }),
+    })).json()).page as Page;
+  }
+
+  async updatePage(pageId: number, params: PageCreate): Promise<Page> {
+    return (await (await fetch(this.make(`pages/${pageId}.json`), {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify({ page: { id: pageId, ...params } }),
+    })).json()).page as Page;
+  }
+
+  async deletePage(pageId: number): Promise<void> {
+    (await (await fetch(
+      this.make(`pages/${pageId}.json`),
+      { method: "DELETE" },
+    )).json());
+
+    return;
   }
 }
 
